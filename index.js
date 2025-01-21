@@ -24,6 +24,7 @@ app.use(
 // Connect to MongoDB
 connectDB();
 
+// Define routes
 app.use("/api", pollRoutes);
 
 app.get("/health", (req, res) => {
@@ -32,6 +33,10 @@ app.get("/health", (req, res) => {
     uptime: process.uptime(),
     timestamp: new Date().toISOString(),
   });
+});
+
+app.get("/", (req, res) => {
+  res.send("Bienvenue sur l'application Poll System !");
 });
 
 // Start the server
