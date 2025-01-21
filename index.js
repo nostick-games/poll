@@ -1,0 +1,40 @@
+require("dotenv").config();
+const express = require("express");
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
+const cors = require("cors"); // Import CORS middleware
+const pollRoutes = require("./routes/pollRoutes");
+const connectDB = require("./config/db");
+
+const app = express();
+
+// Middleware
+app.use(bodyParser.json());
+app.use(cookieParser());
+
+// Enable CORS
+app.use(
+  cors({
+    origin: "https://nostick32.ghost.io", // Allow requests from this origin
+    methods: ["GET", "POST", "PUT", "DELETE"], // Allowed methods
+    credentials: true, // Allow credentials (cookies, etc.)
+  })
+);
+
+// Connect to MongoDB
+connectDB();
+
+app.use("/api", pollRoutes);
+
+app.get("/health", (req, res) => {
+  res.status(200).send({
+    status: "OK",
+    uptime: process.uptime(),
+    timestamp: new Date().toISOString(),
+  });
+});
+
+// Start the server
+app.listen(3000, () => {
+  console.log("Server running on http://localhost:3000");
+});
