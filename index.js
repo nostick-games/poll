@@ -15,7 +15,7 @@ app.use(cookieParser());
 // Enable CORS
 app.use(
   cors({
-    origin: "https://nostick.ghost.io", // Allow requests from this origin
+    origin: ["https://nostick.ghost.io", "https://www.nostick.fr"], // Allow requests from this origin
     methods: ["GET", "POST", "PUT", "DELETE"], // Allowed methods
     credentials: true, // Allow credentials (cookies, etc.)
   })
